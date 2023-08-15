@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';  // Make sure the path is correct based on your project structure
 
 @Component({
   selector: 'app-login',
@@ -11,20 +12,19 @@ export class LoginComponent {
   password = '';
   errorMessage = '';
 
-  users = [
-    { email: 'saeed_salman@live.com', password: 'password1' },
-    { email: 'user2@example.com', password: 'password2' },
-    { email: 'user3@example.com', password: 'password3' }
-  ];
-
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   login() {
-    const user = this.users.find(u => u.email === this.email && u.password === this.password);
-    if (user) {
-      this.router.navigate(['/account']);
-    } else {
-      this.errorMessage = 'Invalid email or password.';
-    }
+    this.authService.authenticateUser(this.email, this.password).subscribe(response => {
+      if (response.valid) {
+        // Store user details in session storage (without password)
+        sessionStorage.setItem('currentUser', JSON.stringify(response));
+
+        // Navigate to account page
+        this.router.navigate(['/account']);
+      } else {
+        this.errorMessage = 'Invalid email or password.';
+      }
+    });
   }
 }
