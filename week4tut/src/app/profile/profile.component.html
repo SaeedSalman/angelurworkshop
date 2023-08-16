@@ -1,0 +1,21 @@
+<form *ngIf="user" (ngSubmit)="onSave()" class="profile-form">
+    <div class="input-group">
+      <label for="username">Username:</label>
+      <input id="username" [(ngModel)]="user.username" name="username">
+    </div>
+    
+    <div class="input-group">
+      <label for="birthdate">Birthdate:</label>
+      <input id="birthdate" [(ngModel)]="user.birthdate" name="birthdate">
+    </div>
+
+    <div class="input-group">
+      <label for="age">Age:</label>
+      <input id="age" type="number" [(ngModel)]="user.age" name="age">
+    </div>
+    
+    <div class="button-group">
+      <button type="submit">Save Changes</button>
+    </div>
+  </form>
+  

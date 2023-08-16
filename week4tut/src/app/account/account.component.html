@@ -1,2 +1,8 @@
-<h1>Accounts Page</h1>
-<img src="https://img.freepik.com/free-icon/user_318-159711.jpg" alt="Profile Picture">
+
+<div *ngIf="user">
+    <h1>Accounts Page</h1>
+    <p>Username: {{ user.username }}</p>
+    <p>Birthdate: {{ user.birthdate }}</p>
+    <p>Age: {{ user.age }}</p>
+</div>
+  
