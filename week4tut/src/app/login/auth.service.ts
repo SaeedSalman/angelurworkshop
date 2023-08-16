@@ -18,4 +18,9 @@ export class AuthService {
     };
     return this.http.post<any>(this.apiUrl, userCredentials);
   }
+
+  isLoggedIn(): boolean {
+    const currentUser = sessionStorage.getItem('currentUser');
+    return !!currentUser;
+  }
 }

@@ -1,34 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChangeDetectorRef } from '@angular/core';
+import { AuthService } from './login/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent implements OnInit {
-  
   title = 'week4tut';
-  isLoggedIn = false;
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
-  ngOnInit() {
-    this.checkIfUserIsLoggedIn();
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 
-  checkIfUserIsLoggedIn() {
-    const currentUser = sessionStorage.getItem('currentUser');
-    this.isLoggedIn = !!currentUser;
-    this.cdr.detectChanges();  // manually triggering change detection
+  ngOnInit() {
+    // Ensure the right login status is loaded when the component initializes
+    this.isLoggedIn;
   }
 
   logOut() {
     sessionStorage.removeItem('currentUser'); 
-    this.isLoggedIn = false; 
-    this.checkIfUserIsLoggedIn();  // ensure the button updates
     this.router.navigate(['/login']); 
   }
 }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';  // Make sure the path is correct based on your project structure
+import { delay } from 'rxjs';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +13,11 @@ export class LoginComponent {
   email = '';
   password = '';
   errorMessage = '';
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, private cdr: ChangeDetectorRef) { }
 
   login() {
     this.authService.authenticateUser(this.email, this.password).subscribe(response => {
@@ -22,7 +27,7 @@ export class LoginComponent {
 
         // Navigate to account page
         this.router.navigate(['/account']);
-        window.location.reload();
+
       } else {
         this.errorMessage = 'Invalid email or password.';
       }
