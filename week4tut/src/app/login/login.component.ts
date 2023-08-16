@@ -22,6 +22,7 @@ export class LoginComponent {
 
         // Navigate to account page
         this.router.navigate(['/account']);
+        window.location.reload();
       } else {
         this.errorMessage = 'Invalid email or password.';
       }
